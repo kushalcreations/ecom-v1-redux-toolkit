@@ -1,19 +1,35 @@
 import { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { useDispatch } from 'react-redux';
+import Alert from 'react-bootstrap/Alert';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/cartSlice';
+import { getProducts } from '../redux/productSlice';
+import StatusCode from '../utils/StatusCode';
+
 
 const Product = () => {
-    const [products, getProducts] = useState([])
+    const {data: products,status} = useSelector(state => state.products)
+    const dispatch = useDispatch()
     // api
     useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
-            .then(data => data.json())
-            .then(result => getProducts(result))
-    }, [])
+        // dispatch an action to fetch products
+        dispatch(getProducts());
 
-    const dispatch = useDispatch()
+
+        // fetch('https://fakestoreapi.com/products')
+        //     .then(data => data.json())
+        //     .then(result => getProducts(result))
+    }, [dispatch])
+
+    if(status === StatusCode.LOADING){
+        return <h1>Loading...</h1>
+    }
+
+    if(status === StatusCode.ERROR){
+        return <Alert key="danger" variant='danger' >Error...</Alert>
+    }
+
     const card = products.map((product, i) => (
         <div className="col-md-3" style={{ marginBottom: '10px' }} key={i}>
             <Card key={product.id} className='h-100' style={{ width: '18rem' }}>

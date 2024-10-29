@@ -43,7 +43,7 @@ const Cart = () => {
                                 <Card.Footer style={{ backgroundColor: 'white' }}>
                                     <Button className="mx-2" variant="primary" onClick={() => handleAddToCart(product.id)}>+</Button>
                                     <Button className="mx-2" variant="primary" onClick={() => handleRemoveFromCart(product.id)}>-</Button>
-                                    <Button className="mx-2" variant="primary" onClick={() => handleRemove(product.id)}>Remove</Button>
+                                    <Button className="mx-2" variant="danger" onClick={() => handleRemove(product.id)}>Remove</Button>
                                 </Card.Footer>
                             </div>
                         </Card>

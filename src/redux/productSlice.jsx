@@ -3,7 +3,8 @@ import StatusCode from '../utils/StatusCode';
 
 const initialState = {
     data: [],
-    status: StatusCode.IDLE
+    loading: false,
+    error: null
 }
 const productSlice = createSlice({
     name: 'products',
@@ -16,14 +17,15 @@ const productSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getProducts.pending, (state, action) => {
-                state.status = StatusCode.LOADING
+                state.loading = true
             })
             .addCase(getProducts.fulfilled, (state, action) => {
                 state.data = action.payload
-                state.status = StatusCode.IDLE
+                state.loading = false
             })
             .addCase(getProducts.rejected, (state, action) => {
-                state.status = StatusCode.ERROR
+                state.loading = false
+                state.error = action.error.message
             })
     }
 });

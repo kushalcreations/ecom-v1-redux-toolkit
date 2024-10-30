@@ -9,7 +9,7 @@ import StatusCode from '../utils/StatusCode';
 
 
 const Product = () => {
-    const {data: products,status} = useSelector(state => state.products)
+    const { data: products, loading, error } = useSelector(state => state.products)
     const dispatch = useDispatch()
     // api
     useEffect(() => {
@@ -22,12 +22,12 @@ const Product = () => {
         //     .then(result => getProducts(result))
     }, [dispatch])
 
-    if(status === StatusCode.LOADING){
+    if (loading) {
         return <h1>Loading...</h1>
     }
 
-    if(status === StatusCode.ERROR){
-        return <Alert key="danger" variant='danger' >Error...</Alert>
+    if (error) {
+        return <Alert key="danger" variant='danger' >Error.....</Alert>
     }
 
     const card = products.map((product, i) => (
